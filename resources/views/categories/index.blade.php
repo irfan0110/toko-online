@@ -61,10 +61,25 @@
                             No Image category
                         @endif
                     </td>
-                    <td></td>
+                    <td>
+                        <a href="{{ route('categories.edit', ['id' => $category->id]) }}" class="btn btn-info btn-sm"><i class="fa fa-edit" ></i> Edit</a>
+                        <a href="{{ route('categories.show', ['id' => $category->id]) }}" class="btn btn-primary btn-sm"><i class="fa fa-list-alt"></i> Detail</a>
+                        <form action="{{ route('categories.destroy',['id' => $category->id])}}" method="post" onsubmit="return confirm('Move category to trash?')" class="d-inline">
+                            @csrf
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="10">
+                        {{$categories->appends(Request::all())->links()}}
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 @endsection
