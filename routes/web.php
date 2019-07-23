@@ -25,6 +25,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource("users", "UserController");
 
+Route::get('/categories/trash', 'CategoryController@trash')->name('categories.trash');
+
+Route::get('/categories/{id}/restore', 'CategoryController@restore')->name('categories.restore');
+
+Route::delete('/categories/{id}/delete-permanent','CategoryController@deletePermanent')->name('categories.delete-permanent');
+
+Route::get('/ajax/categories/search','CategoryController@ajaxSearch')->name('ajaxCategory.search');
+
 Route::resource('categories', 'CategoryController');
 
-Route::get('/categories/trash', 'CategoryController@trash')->name('categories.trash');
+Route::resource('books', 'BookController');

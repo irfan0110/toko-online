@@ -55,8 +55,14 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{route("categories.index")}}">
-          <i class="fa fa-list"></i>
-          <span>Cetegories</span>
+          <i class="fa fa-tags"></i>
+          <span>Manage Cetegories</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{route("books.index")}}">
+          <i class="fa fa-book"></i>
+          <span>Manage Books</span>
         </a>
       </li>
       <!-- Sidebar Toggler (Sidebar) -->
@@ -177,7 +183,7 @@
 
   <!-- Custom scripts for all pages-->
   <script src="{{asset('public/sbadmin-2/js/sb-admin-2.min.js')}}"></script>
-
+  @yield('footer-scripts')
 </body>
-
+  
 </html>

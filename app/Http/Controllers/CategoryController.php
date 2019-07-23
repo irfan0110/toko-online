@@ -142,4 +142,44 @@ class CategoryController extends Controller
         $category->delete();
         return redirect()->route('categories.index')->with('status','Category successfully move to trash');
     }
+
+    public function trash()
+    {
+        $deleted_category = \App\Category::onlyTrashed()->paginate(5);
+        return view('categories.trash',['categories' => $deleted_category]);
+    }
+
+    public function restore($id) 
+    {
+        $category = \App\Category::withTrashed()->findOrFail($id);
+
+        if($category->trashed()){
+            $category->restore();
+        }else {
+            return redirect()->route('categories.index')->with('status','Category is not in trashed');
+        }
+
+        return redirect()->route('categories.index')->with('status','Category successfully restored');
+    }
+
+    public function deletePermanent($id)
+    {
+        $category = \App\Category::withTrashed()->findOrFail($id);
+
+        if(!$category->trashed()){
+            return redirect()->route('categories.index')->with('status','Can not delete permanent active category');
+        }else {
+            $category->forceDelete();
+            return redirect()->route('categories.index')->with('status','Category permanently deleted');
+        }
+    }
+
+    public function ajaxSearch(Request $request)
+    {
+        $keyword = $request->get('q');
+
+        $categories = \App\Category::where('name', 'LIKE', "%$keyword%")->get();
+
+        return $categories;
+    }
 }
