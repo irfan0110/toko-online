@@ -58,7 +58,9 @@
                         </td>
                         <td>{{$book->stock}}</td>
                         <td>@currency($book->price)</td>
-                        <td></td>
+                        <td>
+                            <a href="{{ route('books.edit', ['id' => $book->id])}}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                        </td>
                     </tr>
                 </tbody>
                 @endforeach

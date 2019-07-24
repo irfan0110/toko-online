@@ -12,28 +12,55 @@
                 @csrf
 
                 <label for="title">Book Title</label>
-                <input type="text" name="title" class="form-control {{ $errors->first('title') ? 'is-invalid' : ''}}" placeholder="Book title"><br>
+                <input type="text" name="title" class="form-control {{ $errors->first('title') ? 'is-invalid' : ''}}" placeholder="Book title">
+                <div class="invalid-feedback">
+                    {{$errors->first('title')}}
+                </div>
+                <br>
 
                 <label for="cover">Book Cover</label>
-                <input type="file" name="cover" class="form-control {{$errors->first('cover') ? 'is-invalid' : ''}}"><br>
+                <input type="file" name="cover" class="form-control {{$errors->first('cover') ? 'is-invalid' : ''}}">
+                <div class="invalid-feedback">
+                    {{$errors->first('cover')}}
+                </div>
+                <br>
 
                 <label for="description">Description</label>
-                <textarea name="description" class="form-control {{$errors->first('description') ? 'is-invalid' :''}}" placeholder="Give description about this book"></textarea><br>
-                
+                <textarea name="description" class="form-control {{$errors->first('description') ? 'is-invalid' :''}}" placeholder="Give description about this book"></textarea>
+                <div class="invalid-feedback">
+                    {{$errors->first('description')}}
+                </div>
+                <br>
+
                 <label for="category">Book Category</label>
                 <select name="categories[]" multiple id="categories" class="form-control"></select><br><br>
-
+                
                 <label for="stock">Stock</label>
-                <input type="number" name="stock" class="form-control {{$errors->first('stock') ? 'is-invalid' : ''}}" min=0 value=0><br>
+                <input type="number" name="stock" class="form-control {{$errors->first('stock') ? 'is-invalid' : ''}}" min=0 value=0>
+                <div class="invalid-feedback">
+                    {{$errors->first('stock')}}
+                </div>
+                <br>
 
                 <label for="author">Author</label>
-                <input type="text" name="author" class="form-control {{ $errors->first('author') ? 'is-invalid' : ''}}" placeholder="Book Author"><br>
+                <input type="text" name="author" class="form-control {{ $errors->first('author') ? 'is-invalid' : ''}}" placeholder="Book Author">
+                <div class="invalid-feedback">
+                    {{$errors->first('author')}}
+                </div>
+                <br>
 
                 <label for="publisher">Publisher</label>
                 <input type="text" name="publisher" class="form-control {{$errors->first('publisher') ? 'is-invalid' : ''}}" placeholder="Book Publisher">
+                <div class="invalid-feedback">
+                    {{$errors->first('publisher')}}
+                </div>
 
                 <label for="price">Price</label>
-                <input type="number" name="price" class="form-control {{$errors->first('price') ? 'is-invalid' : ''}}" placeholder="Book Price" min=0><br>
+                <input type="number" name="price" class="form-control {{$errors->first('price') ? 'is-invalid' : ''}}" placeholder="Book Price" min=0>
+                <div class="invalid-feedback">
+                    {{$errors->first('price')}}
+                </div>
+                <br>
 
                 <button class="btn btn-primary btn-sm" name="save_action" value="PUBLISH">Publish</button>
                 <button class="btn btn-secondary btn-sm" name="save_action" value="DRAFt">Save As Draft</button>
