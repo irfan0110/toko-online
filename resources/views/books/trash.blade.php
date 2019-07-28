@@ -1,17 +1,12 @@
 @extends('layouts.global')
 @section('title')
-    Books List
+    Book Trashed
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <h3>Books List</h3>
-            @if(session('status'))
-            <div class="alert alert-success">
-                {{session('status')}}
-            </div>
-            @endif
+            <h3>Trashed Books</h3>
             <div class="row">
                 <div class="col-md-6"></div>
                 <div class="col-md-6">
@@ -31,12 +26,6 @@
                     </ul>
                 </div>
             </div>
-            <hr class="my-3">
-            <div class="row mb-3">
-                <div class="col-md-12 text-right">
-                    <a href="{{ route('books.create')}}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Create Books</a>                    
-                </div>
-            </div>
             <br>
             <table class="table table-bordered table-striped">
                 <thead>
@@ -44,11 +33,10 @@
                         <th><b>Cover</b></th>
                         <th><b>Title</b></th>
                         <th><b>Author</b></th>
-                        <th><b>Status</b></th>
                         <th><b>Categories</b></th>
                         <th><b>Stock</b></th>
                         <th><b>Price</b></th>
-                        <th><b>Actions</b></th>
+                        <th><b>Action</b></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,42 +44,30 @@
                     <tr>
                         <td>
                             @if($book->cover)
-                                <img src="{{asset('public/storage/'. $book->cover)}}" width="120px">
+                                <img src="{{ asset('public/storage/'.$book->cover)}}" width="96px">
                             @endif
                         </td>
-                        <td>{{$book->title}}</td>
-                        <td>{{$book->author}}</td>
-                        <td>
-                            @if($book->status == 'DRAFT')
-                                <span class="badge badge-danger">{{$book->status}}</span>
-                            @else 
-                                <span class="badge badge-success">{{$book->status}}</span>
-                            @endif
-                        </td>
+                        <td>{{ $book->title }}</td>
+                        <td>{{ $book->author }}</td>
                         <td>
                             <ul class="pl-3">
                                 @foreach($book->categories as $category)
-                                    <li>{{$category->name}}</li>
+                                <li>{{ $category->name }}</li>
                                 @endforeach
                             </ul>
                         </td>
-                        <td>{{$book->stock}}</td>
-                        <td>@currency($book->price)</td>
+                        <td>{{ $book->stock }}</td>
+                        <td>{{ $book->price }}</td>
                         <td>
-                            <a href="{{ route('books.edit', ['id' => $book->id])}}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> Edit</a>
-                            <form action="{{ route('books.destroy', ['id' => $book->id])}}" method="post" class="d-inline" onsubmit="return confirm('Move to trash?')">
-                                @csrf
-                                <input type="hidden" name="_method" value="DELETE">
-                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</button>
-                            </form>
+                            <a href="{{ route('books.restore',['id' => $book->id])}}" class="btn btn-success btn-sm"><i class="fa fa-recycle"></i> Restore</a>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
-                @endforeach
-                <tfoot>
+                <tfoot> 
                     <tr>
                         <td colspan="10">
-                            {{$books->appends(Request::all())->links()}}
+                            {{ $books->appends(Request::all())->links()}}
                         </td>
                     </tr>
                 </tfoot>
