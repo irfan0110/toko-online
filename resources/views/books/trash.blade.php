@@ -7,8 +7,22 @@
     <div class="row">
         <div class="col-md-12">
             <h3>Trashed Books</h3>
+            @if(session('status'))
+            <div class="alert alert-danger">
+                {{session('status')}}
+            </div>
+            @endif
             <div class="row">
-                <div class="col-md-6"></div>
+                <div class="col-md-6">
+                    <form action="{{ route('books.trash')}}">
+                        <div class="input-group">
+                            <input type="text" name="keyword" value="{{Request::get('keyword')}}" class="form-control" placeholder="Filter by title and author">
+                            <div class="input-group-append">
+                                <input type="submit" value="filter" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <div class="col-md-6">
                     <ul class="nav nav-pills card-header-pills">
                         <li class="nav-item">
@@ -26,6 +40,7 @@
                     </ul>
                 </div>
             </div>
+            <hr class="my-3">
             <br>
             <table class="table table-bordered table-striped">
                 <thead>
@@ -60,6 +75,11 @@
                         <td>{{ $book->price }}</td>
                         <td>
                             <a href="{{ route('books.restore',['id' => $book->id])}}" class="btn btn-success btn-sm"><i class="fa fa-recycle"></i> Restore</a>
+                            <form action="{{ route('books.delete-permanent',['id' => $book->id])}}" method="post" class="d-inline" onsubmit="return confirm('Delete this book permanently ?')">
+                                @csrf
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</button>
+                            </form>
                         </td>
                     </tr>
                     @endforeach
