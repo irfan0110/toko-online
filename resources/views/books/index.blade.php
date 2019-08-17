@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    <div class="row">
+    <div class="row bg-white shadow-sm p-3">
         <div class="col-md-12">
             <h3>Books List</h3>
             @if(session('status'))

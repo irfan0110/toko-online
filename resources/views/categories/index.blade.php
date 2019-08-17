@@ -5,7 +5,7 @@
 @endsection
 
 @section("content")
-    <div class="col-md-12">
+    <div class="col-md-12 bg-white shadow-sm p-3">
         <h3>Category List</h3>
         @if(session('status'))
             <div class="alert alert-success">

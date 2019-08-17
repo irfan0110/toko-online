@@ -5,7 +5,7 @@
 @endsection
 
 @section("content")
-    <div class="col-md-12">
+    <div class="col-md-12 bg-white shadow-sm p-3">
         <h3>List Users</h3>
         @if(session('status'))
             <div class="alert alert-success">
@@ -78,7 +78,7 @@
                             <input type="hidden" name="_method" value="DELETE">
                             <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</button>
                         </form>
-                        <a href="{{route('users.show', ['id' => $user->id])}}" class="btn btn-primary btn-sm"><i class="fa fa-address-card"></i> Detail</a>
+                        <a href="{{route('users.show', ['id' => $user->id])}}" class="btn btn-primary btn-sm"><i class="fa user"></i> Detail</a>
                     </td>
                 </tr>
                 <?php $no++ ?>
