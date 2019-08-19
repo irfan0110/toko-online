@@ -65,6 +65,12 @@
           <span>Manage Books</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{route("orders.index")}}">
+          <i class="fa fa-inbox"></i>
+          <span>Manage Orders</span>
+        </a>
+      </li>
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

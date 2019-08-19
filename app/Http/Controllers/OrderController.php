@@ -3,18 +3,53 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class OrderController extends Controller
 {
+    
+    public function __construct()
+    {   
+        $this->middleware(function($request, $next){
+            if(Gate::allows('manage-orders')) return $next($request);
+            abort(403, 'Anda tidak memiliki hak akses');
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = \App\Order::with('user')->with('books')->paginate(5);
+        $status = $request->get('status');
+        $keyword = $request->get('key');
 
+        if($keyword && $status){
+            $orders = \App\Order::with('user')
+                                ->with('books')
+                                ->whereHas('user', function($query) use ($keyword){
+                                    $query->where('email','LIKE',"%$keyword%")
+                                          ->orWhere('name','LIKE',"%$keyword%");
+                                })
+                                ->orWhere('created_at','LIKE',"%$keyword%")
+                                ->orWhere('invoice_number','LIKE',"%$keyword%")
+                                ->where('status','LIKE',"%$status%")
+                                ->paginate(5);
+        }elseif($keyword && $status == ''){
+            $orders = \App\Order::with('user')
+                                ->with('books')
+                                ->whereHas('user', function($query) use ($keyword){
+                                    $query->where('email','LIKE',"%$keyword%")
+                                          ->orWhere('name','LIKE',"%$keyword%");
+                                })
+                                ->orWhere('created_at','LIKE',"%$keyword%")
+                                ->orWhere('invoice_number','LIKE',"%$keyword%")
+                                ->paginate(5);
+        }else {
+            $orders = \App\Order::with('user')->with('books')->paginate(5);
+        }
         return view('orders.index',['orders' => $orders]);
     }
 
