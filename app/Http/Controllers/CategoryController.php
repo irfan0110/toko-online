@@ -124,11 +124,11 @@ class CategoryController extends Controller
         if($request->file('image')){
             if($categories->image && file_exists(storage_path('app/public/'.$categories->image))){
                 \Storage::delete('public/'.$categories->image);
-
-                $new_image = $request->file('image')->store('category_image','public');
-
-                $categories->image = $new_image;
             }
+
+            $new_image = $request->file('image')->store('category_image','public');
+
+            $categories->image = $new_image;
         }
 
         $categories->updated_by = \Auth::user()->id;
